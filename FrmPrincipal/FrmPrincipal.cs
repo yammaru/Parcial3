@@ -14,8 +14,10 @@ namespace FrmPrincipal
 {
     public partial class FrmPrincipal : Form
     {
-        ServicioRecaudo ServicioRecaudo = new ServicioRecaudo();
         List<Recaudado> recaudados = new List<Recaudado>();
+        ServicioRecaudo ServicioRecaudo = new ServicioRecaudo();
+        
+        Recaudado recaudado = new Recaudado();
         public FrmPrincipal()
         {
             InitializeComponent();
@@ -77,7 +79,7 @@ namespace FrmPrincipal
         {
             Grilla.DataSource = null;
             Grilla.DataSource = ServicioRecaudo.Buscar(CmbTipo.Text, txtMes.Text, txtAño.Text);
-            if ((ServicioRecaudo.Buscar(CmbTipo.Text, txtMes.Text, txtAño.Text)) !=null)
+            if ((ServicioRecaudo.Buscar(CmbTipo.Text, txtMes.Text, txtAño.Text)) ==null)
             {
                 MessageBox.Show("Esta vacia");
             }
@@ -85,14 +87,26 @@ namespace FrmPrincipal
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Grilla.DataSource = null;
             if ((ServicioRecaudo.Consultar()) != null)
-            {
-                MessageBox.Show("Esta vacia");
-            }
-            else
             {
                 Grilla.DataSource = ServicioRecaudo.Consultar();
             }
+            else
+            {
+                
+                MessageBox.Show("Esta vacia");
+            }
+        }
+
+        private void FrmPrincipal_Load(object sender, EventArgs e)
+        {
+            
+           foreach  (var item in ServicioRecaudo.Consultar())
+            {
+                comboBox1.Items.Add(item.Nit);
+            }
+            
         }
     }
 }
