@@ -38,14 +38,15 @@ namespace DAL
         public List<Recaudado> Consultar()
         {
             recaudados.Clear();
-            Recaudado recaudado = new Recaudado();
+            
             using (var Comando = Connection.CreateCommand())
             {
-                Comando.CommandText = "select * from Recaudo";
+                Comando.CommandText = "select *from Recaudo";
                 Reader = Comando.ExecuteReader();
                 while (Reader.Read())
                 {
-                   recaudado = Map(Reader);
+                    Recaudado recaudado = new Recaudado();
+                    recaudado = Map(Reader);
                    recaudados.Add(recaudado);
                 }
             }
@@ -55,13 +56,13 @@ namespace DAL
         {
 
             Recaudado recaudado = new Recaudado();
-            recaudado.Nit = (string)reader["CodigoProducto"];
-            recaudado.Mes = (string)reader["CodigoProducto"];
-            recaudado.Año = (string)reader["CodigoProducto"];
-            recaudado.Tipo = (string)reader["CodigoProducto"];
-            recaudado.ValorImpuesto = (decimal)reader["CodigoProducto"];
-            recaudado.Identificacion = (string)reader["CodigoProducto"];
-            recaudado.Nombre = (string)reader["CodigoProducto"];
+            recaudado.Nit = (string)reader["Nit"];
+            recaudado.Mes = (string)reader["Mes"];
+            recaudado.Año = (string)reader["Año"];
+            recaudado.Tipo = (string)reader["Tipo"];
+            recaudado.ValorImpuesto = (decimal)reader["Valor"];
+            recaudado.Identificacion = (string)reader["Identificacion"];
+            recaudado.Nombre = (string)reader["Nombre"];
             return recaudado;
         }
         public List<Recaudado> Buscar(string tipo,string mes,string anya)
